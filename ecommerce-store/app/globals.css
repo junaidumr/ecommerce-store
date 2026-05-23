@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #fafaf9;
+  --foreground: #18181b;
+  --accent: #18181b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: #18181b;
+  color: #fafaf9;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  background: #18181b;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #27272a;
+  box-shadow: 0 8px 24px rgb(24 24 27 / 0.2);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #18181b;
+  background: transparent;
+  border: 1px solid #d4d4d8;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  border-color: #18181b;
+  background: white;
+}
+
+/* Inputs */
+.input-field {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: #18181b;
+  background: white;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input-field:focus {
+  border-color: #18181b;
+  box-shadow: 0 0 0 3px rgb(24 24 27 / 0.08);
+}
+
+/* Quantity */
+.qty-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.5rem;
+  background: white;
+}
+
+.qty-control button {
+  padding: 0.25rem 0.75rem;
+  font-size: 1rem;
+  color: #71717a;
+  transition: color 0.15s;
+}
+
+.qty-control button:hover {
+  color: #18181b;
+}
+
+.qty-control span {
+  min-width: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-left: 1px solid #e4e4e7;
+  border-right: 1px solid #e4e4e7;
+}
+
+/* Product grid stagger */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product-card-animate {
+  animation: card-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Cart sidebar */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background: rgb(24 24 27 / 0.45);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 50;
+  height: 100%;
+  width: 100%;
+  max-width: 26rem;
+  box-shadow: -12px 0 40px rgb(0 0 0 / 0.08);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.cart-sidebar--open {
+  transform: translateX(0);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  background: white;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.12);
+  transform: translateX(calc(100% + 2rem));
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.toast--visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .toast {
+    left: 1rem;
+    right: 1rem;
+    transform: translateY(calc(100% + 2rem));
+  }
+  .toast--visible {
+    transform: translateY(0);
+  }
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.dark .input-field {
+  color: #fafafa;
+}
+
+.dark .qty-control span {
+  border-color: #3f3f46;
+}
+
+.dark .qty-control {
+  border-color: #3f3f46;
+}
